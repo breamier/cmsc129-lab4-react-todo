@@ -12,7 +12,6 @@ export default function TodoItem({ id , title , date, time, priority, completed,
       <button className="btn btn-danger" 
       onClick={() => deleteTodo(id)}>Delete</button>
       <button onClick={() => startEditTodo({ id, title, date, time, priority, completed })} className="btn">Edit</button>
-
     </li>
     )
 }

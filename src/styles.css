@@ -138,3 +138,48 @@ body {
 .list li:has(input:checked) label:hover::before {
   background: hsl(200, 100%, 30%);
 }
+
+/* .sort-controls {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.sort-controls label {
+  font-size: 0.9rem;
+  color: hsl(200, 100%, 80%);
+}
+
+.sort-controls select {
+  background: hsl(200, 82%, 26%);
+  color: hsl(200, 100%, 90%);
+  border: 1px solid hsl(200, 100%, 40%);
+  border-radius: 0.25em;
+  padding: 0.25em 0.5em;
+  outline: none;
+}
+
+.sort-controls select:focus {
+  border-color: hsl(200, 100%, 70%);
+} */
+
+.sort-control {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  align-items: center;
+}
+
+.sort-control label {
+  font-weight: bold;
+}
+
+.sort-control select {
+  background: hsl(200, 100%, 30%);
+  color: hsl(200, 100%, 90%);
+  border: 1px solid hsl(200, 100%, 40%);
+  border-radius: 0.25em;
+  padding: 0.25em;
+}

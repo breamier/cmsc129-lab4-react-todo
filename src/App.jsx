@@ -3,10 +3,13 @@ import "./styles.css"
 import NewTodoForm from "./NewTodoForm.jsx"
 import TodoList from "./TodoList.jsx"
 import { getTodos, createTodoAsync, updateTodoAsync, deleteTodoAsync, getTodosAsync } from "./services/services.jsx"
+import SortControls from "./SortControl.jsx"
 
 export default function App(){
   const [todos, setTodos] = useState([])
   const [editingTodo, setEditingTodo] = useState(null)
+  const [sortedTodos, setSortedTodos] = useState([]) 
+
 
   useEffect(() => {
    
@@ -14,6 +17,7 @@ export default function App(){
       const firestoreTodos = await getTodos();
       if(firestoreTodos){
         setTodos(firestoreTodos);
+        setSortedTodos(firestoreTodos) 
       }
     }
 
@@ -32,6 +36,7 @@ export default function App(){
         const added = await createTodoAsync(newTodo);
         if(added){
           setTodos((currentTodos) => [...currentTodos, added])
+          setSortedTodos((currentTodos) => [...currentTodos, added])
         }
   }
 
@@ -55,6 +60,9 @@ export default function App(){
           todo.id === updated.id ? updated : todo
         )
       )
+      setSortedTodos((currentTodos) =>
+        currentTodos.map((todo) => (todo.id === updated.id ? updated : todo))
+      )
       setEditingTodo(null)
     }
   }
@@ -69,7 +77,9 @@ export default function App(){
         currentTodos.map(todo => 
           todo.id === id? updated: todo
         )
-      );
+      )
+      setSortedTodos((currentTodos) => 
+      currentTodos.map((todo) => todo.id === id? updated: todo))
     }
     
   }
@@ -79,9 +89,29 @@ export default function App(){
     setTodos((currentTodos) => 
       currentTodos.filter(todo => todo.id !== id)
     )
+    setSortedTodos((currentTodos) => currentTodos.filter((todo) => todo.id !== id))
   }
 
-  console.log(todos)
+  function handleSortChange(field, order) {
+    const sorted = [...todos].sort((a, b) => {
+      if (field === "priority") {
+        const priorityOrder = { Low: 1, Medium: 2, High: 3 }
+        return order === "asc"
+          ? priorityOrder[a.priority] - priorityOrder[b.priority]
+          : priorityOrder[b.priority] - priorityOrder[a.priority]
+      }
+
+      const aDate = new Date(a[field])
+      const bDate = new Date(b[field])
+      return order === "latest"
+        ? bDate - aDate
+        : aDate - bDate
+    })
+
+    setSortedTodos(sorted)
+  }
+
+
   return (
   <>
   <h1>{editingTodo ? "Update Todo": "Add Todo"}</h1>
@@ -92,7 +122,8 @@ export default function App(){
     cancelEdit={() => setEditingTodo(null)}></NewTodoForm>
     
   <h1 className="header">Todo List</h1>
-  <TodoList todos={todos} toggleTodo={toggleTodo} deleteTodo={deleteTodo} startEditTodo={startEditTodo}></TodoList>
+  <SortControls onSortChange={handleSortChange}/>
+  <TodoList todos={sortedTodos} toggleTodo={toggleTodo} deleteTodo={deleteTodo} startEditTodo={startEditTodo}></TodoList>
   </>
   )
 }

@@ -13,6 +13,11 @@ export default function NewTodoForm({ onSubmit, initialValues = {},  isEditing =
             setDate(initialValues.date || "")
             setTime(initialValues.time || "")
             setPriority(initialValues.priority || "Low")
+          } else {
+            setTitle("")
+            setDate("")
+            setTime("")
+            setPriority("Low")
           }
         }, [initialValues?.id])
 
