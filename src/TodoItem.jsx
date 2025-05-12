@@ -1,6 +1,6 @@
 
 
-export default function TodoItem({ id , title , completed, toggleTodo, deleteTodo}){
+export default function TodoItem({ id , title , date, time, priority, completed, toggleTodo, deleteTodo, startEditTodo}){
     return(
         <li key={id}>
       <label>
@@ -11,6 +11,8 @@ export default function TodoItem({ id , title , completed, toggleTodo, deleteTod
       </label>
       <button className="btn btn-danger" 
       onClick={() => deleteTodo(id)}>Delete</button>
+      <button onClick={() => startEditTodo({ id, title, date, time, priority, completed })} className="btn">Edit</button>
+
     </li>
     )
 }
