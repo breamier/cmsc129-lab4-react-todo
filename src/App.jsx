@@ -4,6 +4,8 @@ import NewTodoForm from "./NewTodoForm.jsx"
 import TodoList from "./TodoList.jsx"
 import { getTodos, createTodoAsync, updateTodoAsync, deleteTodoAsync, getTodosAsync } from "./services/services.jsx"
 import SortControls from "./SortControl.jsx"
+import { ToastContainer } from "react-toastify"
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function App(){
   const [todos, setTodos] = useState([])
@@ -99,13 +101,16 @@ export default function App(){
         return order === "asc"
           ? priorityOrder[a.priority] - priorityOrder[b.priority]
           : priorityOrder[b.priority] - priorityOrder[a.priority]
+      } else if (field === "addedAt"){
+        const aAdded = new Date(a.addedAt)
+      const bAdded = new Date(b.addedAt)
+        return order === "latest" ? bAdded - aAdded : aAdded - bAdded
       }
 
-      const aDate = new Date(a[field])
-      const bDate = new Date(b[field])
-      return order === "latest"
-        ? bDate - aDate
-        : aDate - bDate
+      const aDue = new Date(`${a.date}T${a.time}:00`)
+      const bDue = new Date(`${b.date}T${b.time}:00`)
+      return order === "latest" ? bDue - aDue : aDue - bDue
+      
     })
 
     setSortedTodos(sorted)
@@ -124,6 +129,7 @@ export default function App(){
   <h1 className="header">Todo List</h1>
   <SortControls onSortChange={handleSortChange}/>
   <TodoList todos={sortedTodos} toggleTodo={toggleTodo} deleteTodo={deleteTodo} startEditTodo={startEditTodo}></TodoList>
+  <ToastContainer />
   </>
   )
 }

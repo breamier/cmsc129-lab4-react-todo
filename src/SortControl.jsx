@@ -20,7 +20,6 @@ export default function SortControl({ onSortChange }) {
 
   return (
     <div className="sort-control">
-      <label>Sort by:</label>
       <select value={field} onChange={handleFieldChange}>
         <option value="priority">Priority</option>
         <option value="addedAt">Date Added</option>
@@ -36,7 +35,7 @@ export default function SortControl({ onSortChange }) {
         ) : (
           <>
             <option value="latest">Latest</option>
-            <option value="oldest">Oldest</option>
+            <option value="oldest">Earliest</option>
           </>
         )}
       </select>

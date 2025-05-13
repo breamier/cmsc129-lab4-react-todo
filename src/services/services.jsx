@@ -74,6 +74,6 @@ const getSnapshotData = (snapshot) => {
     if(!snapshot.exists) return undefined;
     const data = snapshot.data();
     return {
-        ...data, addedAt: data.addedAt?.toDate().toDateString()
+        ...data, addedAt: data.addedAt?.toDate()
     }
 }

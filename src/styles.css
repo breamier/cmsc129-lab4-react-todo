@@ -1,10 +1,17 @@
+:root{
+  --primary-color: hsl(321, 96%, 26%);
+  --secondary-color: hsl(321, 71%, 56%);
+  --text-color: #ffffff;
+  --background: #ee7a7a;
+}
+
 * {
   font-family: Arial, Helvetica, sans-serif;
   box-sizing: border-box;
 }
 
 body {
-  background: #333;
+  background: var(--background);
   color: hsl(200, 100%, 90%);
   max-width: 400px;
   padding: 1rem;
@@ -25,8 +32,8 @@ body {
 
 .btn {
   background: hsl(200, 100%, 50%, 0.1);
-  border: 1px solid hsl(200, 100%, 50%);
-  color: hsl(200, 100%, 50%);
+  border: 1px solid var(--primary-color);
+  color: var(--primary-color);
   padding: 0.25em 0.5em;
   border-radius: 0.25em;
   cursor: pointer;
@@ -35,7 +42,9 @@ body {
 
 .btn:hover,
 .btn:focus-visible {
-  background: hsl(200, 100%, 50%, 0.2);
+  background: var(--primary-color);
+  opacity: 70%;
+  color: var(--text-color);
 }
 
 .btn.btn-danger {
@@ -46,20 +55,22 @@ body {
 
 .btn.btn-danger:hover,
 .btn.btn-danger:focus-visible {
-  background: hsl(0, 100%, 40%, 0.2);
+  background: hsl(0, 100%, 40%);
+  opacity: 70%;
+  color: var(--text-color);
 }
 
 .new-item-form input {
   outline: none;
-  border: 1px solid hsl(200, 100%, 40%);
-  background: hsl(200, 100%, 30%);
+  border: 2px solid var(--primary-color);
+  background: hsl(0, 0%, 100%);
   border-radius: 0.25em;
   padding: 0.25em 0.5em;
-  color: hsl(200, 100%, 90%);
+  color: var(--primary-color);
 }
 
 .new-item-form input:focus {
-  border: 1px solid hsl(200, 100%, 70%);
+  border: 2px solid var(--secondary-color);
 }
 
 .header {
@@ -77,6 +88,7 @@ body {
 
 .list li:has(input:checked) label {
   color: hsl(200, 20%, 40%);
+  text-decoration: line-through;
 }
 
 .list {
@@ -99,7 +111,7 @@ body {
 }
 
 .list li:has(input:focus-visible) label {
-  outline: 1px solid hsl(200, 100%, 50%);
+  outline: 1px solid var(--primary-color);
 }
 
 .list li input {
@@ -124,50 +136,24 @@ body {
 }
 
 .list li label:hover::before {
-  background: hsl(200, 100%, 80%);
+  background: var(--secondary-color);
 }
 
 .list li:has(input:checked) label::before {
   content: "✔";
-  background: hsl(200, 100%, 40%);
+  background: var(--primary-color);
   color: hsl(200, 100%, 90%);
   font-size: 0.75rem;
   font-weight: bold;
 }
 
 .list li:has(input:checked) label:hover::before {
-  background: hsl(200, 100%, 30%);
+  background: var(--secondary-color);
 }
-
-/* .sort-controls {
-  display: flex;
-  gap: 0.5rem;
-  align-items: center;
-  margin-bottom: 1rem;
-}
-
-.sort-controls label {
-  font-size: 0.9rem;
-  color: hsl(200, 100%, 80%);
-}
-
-.sort-controls select {
-  background: hsl(200, 82%, 26%);
-  color: hsl(200, 100%, 90%);
-  border: 1px solid hsl(200, 100%, 40%);
-  border-radius: 0.25em;
-  padding: 0.25em 0.5em;
-  outline: none;
-}
-
-.sort-controls select:focus {
-  border-color: hsl(200, 100%, 70%);
-} */
 
 .sort-control {
   display: flex;
-  justify-content: space-between;
-  gap: 0.5rem;
+  gap: 1rem;
   margin-bottom: 1rem;
   align-items: center;
 }
@@ -177,9 +163,34 @@ body {
 }
 
 .sort-control select {
-  background: hsl(200, 100%, 30%);
+  background: var(--primary-color);
   color: hsl(200, 100%, 90%);
-  border: 1px solid hsl(200, 100%, 40%);
-  border-radius: 0.25em;
-  padding: 0.25em;
+  border: 1px solid var(--background);
+  border-radius: 1em;
+  padding: 0.50em;
+}
+
+.sort-control select:hover{
+  cursor: pointer;
+}
+
+.toast{
+  display: flex;
+  gap: 1rem;
+  align-items: cnter;
+}
+
+.toast .btn{
+  background: white;
+    border: 1px solid gray;
+    color: gray;
+    padding: 0.25em 0.5em;
+    border-radius: 0.25em;
+    cursor: pointer;
+    outline: none;
+}
+
+.toast .btn:hover {
+  background: gray;
+  opacity: 70%;
 }
