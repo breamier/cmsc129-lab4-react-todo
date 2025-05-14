@@ -28,7 +28,7 @@ body {
 .form-container {
   flex: 1;
   min-width: 250px;
-  overflow: auto;
+  overflow: hidden;
   background-color: var(--primary-color);
   padding: 20px;
 }
@@ -100,13 +100,29 @@ body {
   color: var(--text-color);
   opacity: 80%;
   padding: 0.25em 0.5em;
-  border-radius: 0.25em;
+  border-radius: 0.5em;
   cursor: pointer;
   outline: none;
   width: 100px;
 }
 
 .add-btn:hover{
+  background-color: var(--background);
+}
+
+.cancel-btn {
+  background: var(--primary-color);
+  border: 1px solid var(--secondary-color);
+  color: var(--text-color);
+  opacity: 80%;
+  padding: 0.25em 0.5em;
+  border-radius: 0.5em;
+  cursor: pointer;
+  outline: none;
+  width: 100px;
+}
+
+.cancel-btn:hover {
   background-color: var(--background);
 }
 
@@ -349,4 +365,24 @@ body {
   justify-content: flex-end;
   gap: 0.5rem;
   flex-wrap: wrap;
+}
+
+.priority.low {
+  color: green;
+  font-weight: bold;
+}
+
+.priority.medium {
+  color: orange;
+  font-weight: bold;
+}
+
+.priority.high {
+  color: red;
+  font-weight: bold;
+}
+
+.logo-container{
+  display: block;
+  height: 100px;
 }

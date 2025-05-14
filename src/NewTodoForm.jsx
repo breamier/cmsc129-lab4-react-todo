@@ -78,7 +78,7 @@ export default function NewTodoForm({ onSubmit, initialValues = {},  isEditing =
         </select>
       </div>
             <button className="add-btn">{isEditing ? "Update": "Add"}</button>
-            {isEditing && <button type="button" className="btn cancel" onClick={cancelEdit}>Cancel</button>}
+            {isEditing && <button type="button" className="cancel-btn" onClick={cancelEdit}>Cancel</button>}
         </form>
     )
 }

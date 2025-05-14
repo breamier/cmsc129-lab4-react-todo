@@ -11,6 +11,8 @@ export default function App(){
   const [todos, setTodos] = useState([])
   const [editingTodo, setEditingTodo] = useState(null)
   const [sortedTodos, setSortedTodos] = useState([]) 
+  const [sortField, setSortField] = useState("priority");
+  const [sortOrder, setSortOrder] = useState("asc");
 
 
   useEffect(() => {
@@ -25,6 +27,10 @@ export default function App(){
 
     loadTodos();
   }, [])
+
+  useEffect(() => {
+    handleSortChange(sortField, sortOrder);
+  }, [todos, sortField, sortOrder])
 
   async function addTodo(data) {
         const newTodo = {
@@ -95,7 +101,17 @@ export default function App(){
   }
 
   function handleSortChange(field, order) {
-    const sorted = [...todos].sort((a, b) => {
+    setSortField(field);
+    setSortOrder(order);
+    
+    const sorted = [...todos].sort(
+      (a, b) => {
+      
+      // If completed, go to bottom
+      if (a.completed !== b.completed) {
+        return a.completed ? 1 : -1;
+      }
+
       if (field === "priority") {
         const priorityOrder = { Low: 1, Medium: 2, High: 3 }
         return order === "asc"
@@ -131,7 +147,11 @@ export default function App(){
   return (
   <>
   <div className="app-layout">
+    
     <div className="form-container">
+      <div className="logo-container">
+        <img src="logo.png"></img>
+      </div>
       <h1>{editingTodo ? "Update Todo": "Add Todo"}</h1>
       <NewTodoForm 
         onSubmit={editingTodo ? updateTodo : addTodo} 

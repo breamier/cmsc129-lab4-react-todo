@@ -57,10 +57,10 @@ export default function TodoItem({ id , title , date, time, priority, addedAt, c
           </label>
         </div>
         <div className="todo-details">
-          <p><strong>Date Added:</strong> {addedAt.toLocaleString()}</p>
-          <p><strong>Date Due:</strong> {date}</p>
-          <p><strong>Time Due:</strong> {time}</p>
-          <p><strong>Priority:</strong>{priority}</p>
+          <p><strong>Date Added:</strong> {new Date(addedAt).toLocaleDateString("en-US", {month: "long",  day: "numeric",  year: "numeric"})}</p>
+          <p><strong>Date Due:</strong> {new Date(`${date}T${time}`).toLocaleDateString("en-US", {  month: "long",  day: "numeric",  year: "numeric"})}</p>
+          <p><strong>Time Due:</strong> {new Date(`${date}T${time}`).toLocaleTimeString("en-US", {  hour: "numeric",  minute: "2-digit",  hour12: true})}</p>
+          <p><strong>Priority:</strong><span  className={`priority ${priority.toLowerCase()}`}>{priority}</span></p>
         </div>
         <div className="todo-actions">
           <button className="btn btn-danger" 
