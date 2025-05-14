@@ -1,8 +1,8 @@
 :root{
   --primary-color: hsl(321, 96%, 26%);
   --secondary-color: hsl(321, 71%, 56%);
-  --text-color: #ffffff;
-  --background: #ee7a7a;
+  --text-color: white;
+  --background: rgb(203, 33, 112);
 }
 
 * {
@@ -13,9 +13,73 @@
 body {
   background: var(--background);
   color: hsl(200, 100%, 90%);
-  max-width: 400px;
+  max-width: 800px;
   padding: 1rem;
   margin: 0 auto;
+}
+
+.app-layout {
+  display: flex;
+  gap: 1rem;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.form-container {
+  flex: 1;
+  min-width: 250px;
+  overflow: auto;
+  background-color: var(--primary-color);
+  padding: 20px;
+}
+
+.list-container {
+  flex: 2;
+  min-width: 300px;
+  padding-right: 0.5rem;
+  max-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.scrollable-list {
+  overflow-y: auto;
+  padding-right: 0.5rem;
+  margin-top: 0.5rem;
+  flex-grow: 1;
+  height: 100%;
+}
+
+@media (max-width: 768px) {
+  .app-layout {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .list-container {
+    max-height: 100vh;
+  }
+}
+
+.scrollable-list::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.scrollable-list::-webkit-scrollbar-track {
+  background: #f0f0f0;
+  border-radius: 10px;
+}
+
+.scrollable-list::-webkit-scrollbar-thumb {
+  background-color: var(--primary-color);
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+.scrollable-list::-webkit-scrollbar-thumb:hover {
+  background-color: var(--secondary-color);
 }
 
 .new-item-form {
@@ -30,10 +94,27 @@ body {
   gap: 0.1rem;
 }
 
-.btn {
-  background: hsl(200, 100%, 50%, 0.1);
+.add-btn{
+  background: var(--secondary-color);
   border: 1px solid var(--primary-color);
-  color: var(--primary-color);
+  color: var(--text-color);
+  opacity: 80%;
+  padding: 0.25em 0.5em;
+  border-radius: 0.25em;
+  cursor: pointer;
+  outline: none;
+  width: 100px;
+}
+
+.add-btn:hover{
+  background-color: var(--background);
+}
+
+.btn {
+  background: var(--primary-color);
+  border: 1px solid var(--primary-color);
+  color: var(--text-color);
+  opacity: 80%;
   padding: 0.25em 0.5em;
   border-radius: 0.25em;
   cursor: pointer;
@@ -43,24 +124,25 @@ body {
 .btn:hover,
 .btn:focus-visible {
   background: var(--primary-color);
-  opacity: 70%;
+  opacity: 100%;
   color: var(--text-color);
 }
 
 .btn.btn-danger {
-  background: hsl(0, 100%, 40%, 0.1);
+  background: hsl(0, 100%, 40%);
+  opacity: 80%;
   border: 1px solid hsl(0, 100%, 40%);
-  color: hsl(0, 100%, 40%);
+  color: var(--text-color);
 }
 
 .btn.btn-danger:hover,
 .btn.btn-danger:focus-visible {
   background: hsl(0, 100%, 40%);
-  opacity: 70%;
+  opacity: 100%;
   color: var(--text-color);
 }
 
-.new-item-form input {
+.new-item-form input , .new-item-form select{
   outline: none;
   border: 2px solid var(--primary-color);
   background: hsl(0, 0%, 100%);
@@ -69,7 +151,7 @@ body {
   color: var(--primary-color);
 }
 
-.new-item-form input:focus {
+.new-item-form input:focus , .new-item-form select:focus{
   border: 2px solid var(--secondary-color);
 }
 
@@ -130,6 +212,7 @@ body {
   height: 0.9rem;
   background: hsl(200, 100%, 90%);
   border-radius: 0.25em;
+  border: 2px solid var(--primary-color);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -163,15 +246,33 @@ body {
 }
 
 .sort-control select {
-  background: var(--primary-color);
-  color: hsl(200, 100%, 90%);
-  border: 1px solid var(--background);
+  background: linear-gradient(to bottom, #ffffff, hsl(321, 71%, 90%));
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
   border-radius: 1em;
-  padding: 0.50em;
+  padding: 0.5em 1em;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  appearance: none;
+  font-weight: bold;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  cursor: pointer;
 }
 
-.sort-control select:hover{
-  cursor: pointer;
+.sort-control select::after {
+  content: '';
+  pointer-events: none;
+}
+
+.sort-control select:hover,
+.sort-control select:focus {
+  background: linear-gradient(to bottom, hsl(321, 71%, 100%), hsl(321, 71%, 85%));
+  transform: translateY(-2px);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+.sort-control select:active {
+  transform: translateY(2px);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .toast{
@@ -193,4 +294,59 @@ body {
 .toast .btn:hover {
   background: gray;
   opacity: 70%;
+}
+
+.todo-card {
+  background: white;
+  color: black;
+  border: 2px solid var(--primary-color);
+  border-radius: 0.5em;
+  padding: 0.75rem;
+  margin-bottom: 0.5rem;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s ease;
+}
+
+.todo-card:hover {
+  transform: translateY(-2px);
+}
+
+.todo-header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.5rem;
+}
+
+.todo-title {
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: var(--primary-color);
+}
+
+.todo-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.todo-details p {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.todo-details strong {
+  color: var(--secondary-color);
+  margin-right: 0.25rem;
+}
+
+.todo-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  flex-wrap: wrap;
 }

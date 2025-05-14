@@ -116,20 +116,38 @@ export default function App(){
     setSortedTodos(sorted)
   }
 
+  function removeFromUI(id) {
+    setTodos(current => current.filter(todo => todo.id !== id))
+    setSortedTodos(current => current.filter(todo => todo.id !== id))
+  }
+  
+  function restoreToUI(todo) {
+    setTodos(current => [...current, todo])
+    // const reSorted = sortTodos([...todos, todo], field, order)
+    setSortedTodos(todos)
+  }
+
 
   return (
   <>
-  <h1>{editingTodo ? "Update Todo": "Add Todo"}</h1>
-  <NewTodoForm 
-    onSubmit={editingTodo ? updateTodo : addTodo} 
-    initialValues={editingTodo} 
-    isEditing={!!editingTodo} 
-    cancelEdit={() => setEditingTodo(null)}></NewTodoForm>
-    
-  <h1 className="header">Todo List</h1>
-  <SortControls onSortChange={handleSortChange}/>
-  <TodoList todos={sortedTodos} toggleTodo={toggleTodo} deleteTodo={deleteTodo} startEditTodo={startEditTodo}></TodoList>
-  <ToastContainer />
+  <div className="app-layout">
+    <div className="form-container">
+      <h1>{editingTodo ? "Update Todo": "Add Todo"}</h1>
+      <NewTodoForm 
+        onSubmit={editingTodo ? updateTodo : addTodo} 
+        initialValues={editingTodo} 
+        isEditing={!!editingTodo} 
+        cancelEdit={() => setEditingTodo(null)}></NewTodoForm>
+    </div>
+    <div className="list-container">
+      <h1 className="header">Todo List</h1>
+      <SortControls onSortChange={handleSortChange}/>
+      <div className="scrollable-list">
+        <TodoList  todos={sortedTodos} toggleTodo={toggleTodo} deleteTodo={deleteTodo} startEditTodo={startEditTodo} removeFromUI={removeFromUI} restoreToUI={restoreToUI}></TodoList>
+      </div>
+    </div>
+    <ToastContainer />
+  </div>
   </>
   )
 }
