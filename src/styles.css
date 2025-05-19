@@ -386,3 +386,9 @@ body {
   display: block;
   height: 100px;
 }
+
+.error {
+  color: red;
+  font-size: 0.8rem;
+  margin-top: 4px;
+}

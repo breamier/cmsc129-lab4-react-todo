@@ -6,7 +6,13 @@ export default function NewTodoForm({ onSubmit, initialValues = {},  isEditing =
     const [date, setDate] = useState("")
     const [time, setTime] = useState("")
     const [priority, setPriority] = useState("")
-
+    const [errors, setErrors] = useState({
+      title: "",
+      date: "",
+      time: "",
+      priority: "",
+    });
+    
     useEffect(()=> {
         if (initialValues) {
             setTitle(initialValues.title || "")
@@ -23,13 +29,37 @@ export default function NewTodoForm({ onSubmit, initialValues = {},  isEditing =
 
     function handleSubmit(e){
         e.preventDefault()
-        if(title.trim() === "") return
+        let formIsValid = true;
+        const newErrors = { title: "", date: "", time: "", priority: "" };
+
+        if (title.trim() === "") {
+          newErrors.title = "Title is required";
+          formIsValid = false;
+        }
+        if (!date) {
+          newErrors.date = "Date is required";
+          formIsValid = false;
+        }
+        if (!time) {
+          newErrors.time = "Time is required";
+          formIsValid = false;
+        }
+        if (!priority) {
+          newErrors.priority = "Priority is required";
+          formIsValid = false;
+        }
+
+        setErrors(newErrors);
+
+        if (!formIsValid) return;
         onSubmit({ title, date, time, priority })
+
         if (!isEditing) {
-            setTitle("")
-            setDate("")
-            setTime("")
-            setPriority("Low")
+            setTitle("");
+            setDate("");
+            setTime("");
+            setPriority("Low");
+            setErrors({ title: "", date: "", time: "", priority: "" });
           }
       }
 
@@ -43,6 +73,7 @@ export default function NewTodoForm({ onSubmit, initialValues = {},  isEditing =
           type="text"
           id="title"
         />
+        {errors.title && <p className="error">{errors.title}</p>}
       </div>
 
       <div className="form-row">
@@ -53,6 +84,7 @@ export default function NewTodoForm({ onSubmit, initialValues = {},  isEditing =
           type="date"
           id="date"
         />
+        {errors.date && <p className="error">{errors.date}</p>}
       </div>
 
       <div className="form-row">
@@ -63,6 +95,7 @@ export default function NewTodoForm({ onSubmit, initialValues = {},  isEditing =
           type="time"
           id="time"
         />
+        {errors.time && <p className="error">{errors.time}</p>}
       </div>
 
       <div className="form-row">
@@ -76,6 +109,7 @@ export default function NewTodoForm({ onSubmit, initialValues = {},  isEditing =
           <option>Medium</option>
           <option>High</option>
         </select>
+        {errors.priority && <p className="error">{errors.priority}</p>}
       </div>
             <button className="add-btn">{isEditing ? "Update": "Add"}</button>
             {isEditing && <button type="button" className="cancel-btn" onClick={cancelEdit}>Cancel</button>}

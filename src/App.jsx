@@ -139,7 +139,6 @@ export default function App(){
   
   function restoreToUI(todo) {
     setTodos(current => [...current, todo])
-    // const reSorted = sortTodos([...todos, todo], field, order)
     setSortedTodos(todos)
   }
 
